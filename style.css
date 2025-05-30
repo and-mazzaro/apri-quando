@@ -1,0 +1,82 @@
+/* Sfondo cielo stellato animato */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  color: #fff;
+  text-align: center;
+  padding: 3em 1em;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+h1 {
+  color: #ffd6e8;
+  font-size: 2.5em;
+  margin-bottom: 1.5em;
+}
+
+h2 {
+  color: #ffd6e8;
+  font-size: 1.1em;
+  margin-bottom: 0.5em;
+}
+
+/* Stelle animate */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: transparent url('costellazioni-dell-orsa-maggiore-e-dell-orsa-minore.jpg') repeat;
+  animation: animStars 15s linear infinite;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+@keyframes animStars {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-100px, -100px); }
+}
+
+/* Pulsanti */
+.buttons button {
+  margin: 0.5em;
+  padding: 1em 2em;
+  font-size: 1.1em;
+  background-color: #ffb3c1;
+  color: #1b2735;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 8px rgba(255, 179, 193, 0.4);
+}
+
+.buttons button:hover {
+  background-color: #ffcbd6;
+  transform: scale(1.05);
+}
+
+/* Messaggio centrale */
+#messaggio {
+  margin-top: 2em;
+  padding: 1.5em;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px dashed #ffd6e8;
+  border-radius: 15px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.3em;
+  line-height: 1.6;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.hidden {
+  display: none;
+}
