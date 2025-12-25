@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apri Quando...</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0a0e27;
+      min-height: 100vh;
+      padding: 2rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Effetto particelle luminose */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      background: radial-gradient(circle, rgba(255, 215, 250, 0.8) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float 20s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      text-align: center;
+      color: #fff;
+      margin-bottom: 3rem;
+      text-shadow: 0 0 30px rgba(255, 182, 193, 0.5),
+                   0 0 60px rgba(255, 182, 193, 0.3);
+      letter-spacing: 3px;
+    }
+
+    .buttons-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .buttons-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    button {
+      padding: 2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      color: #0a0e27;
+      background: linear-gradient(145deg, #ffc9e0, #ffb6d9);
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 40px rgba(255, 182, 193, 0.4),
+                  inset 0 -3px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+      transform: scale(0);
+      transition: transform 0.6s;
+    }
+
+    button:hover::before {
+      transform: scale(1);
+    }
+
+    button:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(255, 182, 193, 0.6),
+                  inset 0 -3px 10px rgba(0, 0, 0, 0.1);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    button:active {
+      transform: translateY(-5px) scale(0.98);
+    }
+
+    .special-button {
+      margin-top: 1rem;
+    }
+
+    .special-button button {
+      background: linear-gradient(145deg, #a8edea, #fed6e3);
+      font-size: 1.1rem;
+      padding: 2.5rem;
+      border: 3px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 15px 50px rgba(168, 237, 234, 0.5),
+                  inset 0 -3px 10px rgba(0, 0, 0, 0.1);
+      animation: pulse 3s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    .special-button button:hover {
+      box-shadow: 0 25px 70px rgba(168, 237, 234, 0.7),
+                  inset 0 -3px 10px rgba(0, 0, 0, 0.1);
+      animation: none;
+    }
+
+    /* Sezione Sorpresa */
+    .surprise-section {
+      margin: 4rem auto;
+      display: flex;
+      justify-content: center;
+      perspective: 1000px;
+    }
+
+    .envelope {
+      width: 300px;
+      height: 200px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .envelope:hover {
+      transform: scale(1.05);
+    }
+
+    .envelope-body {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #fff5f8, #ffe8f0);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
+      border: 3px solid rgba(255, 182, 193, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .envelope-body::before {
+      content: '💌';
+      position: absolute;
+      font-size: 4rem;
+      opacity: 0.1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .envelope-text {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #ff69b4;
+      z-index: 1;
+      text-shadow: 0 2px 10px rgba(255, 105, 180, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(145deg, #ffb6d9, #ffc9e0);
+      transform-origin: top;
+      transition: transform 0.6s;
+      border-radius: 15px 15px 0 0;
+      z-index: 2;
+      box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+      border: 3px solid rgba(255, 182, 193, 0.5);
+      border-bottom: none;
+    }
+
+    .envelope.opened .envelope-flap {
+      transform: rotateX(180deg);
+    }
+
+    #surprise-reveal {
+      margin-top: 2rem;
+      animation: slideIn 0.8s ease-out;
+    }
+
+    .surprise-content {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 30px;
+      padding: 3rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+      border: 3px solid rgba(255, 182, 193, 0.5);
+    }
+
+    .surprise-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: #ff69b4;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 2px 10px rgba(255, 105, 180, 0.2);
+    }
+
+    .surprise-message {
+      font-size: 1.3rem;
+      color: #555;
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+
+    .qr-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      display: inline-block;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 4px solid #ffb6d9;
+      margin-bottom: 1.5rem;
+    }
+
+    .qr-container img {
+      display: block;
+      width: 300px;
+      height: 300px;
+      border-radius: 10px;
+    }
+
+    .surprise-hint {
+      font-size: 1.1rem;
+      color: #666;
+    }
+
+    .surprise-hint a {
+      color: #ff69b4;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .surprise-hint a:hover {
+      color: #ff4081;
+      border-bottom-color: #ff4081;
+    }
+
+    #messaggio {
+      margin-top: 3rem;
+      padding: 3rem;
+      background: rgba(255, 255, 255, 0.95);
+      border: 3px solid rgba(255, 182, 193, 0.5);
+      border-radius: 30px;
+      font-size: 1.2rem;
+      line-height: 2;
+      color: #2d2d2d;
+      white-space: pre-wrap;
+      animation: slideIn 0.6s ease-out;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+                  inset 0 0 30px rgba(255, 182, 193, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    #messaggio a {
+      color: #ff6b9d;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    #messaggio a:hover {
+      color: #ff4081;
+      border-bottom-color: #ff4081;
+    }
+
+    #messaggio img {
+      border-radius: 20px;
+      margin: 1.5rem 0.5rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s;
+      max-width: 100%;
+      height: auto;
+      border: 4px solid rgba(255, 182, 193, 0.3);
+    }
+
+    #messaggio img:hover {
+      transform: scale(1.08) rotate(2deg);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Glow effect sul titolo */
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 20px rgba(255, 182, 193, 0.5), 0 0 40px rgba(255, 182, 193, 0.3); }
+      50% { text-shadow: 0 0 30px rgba(255, 182, 193, 0.8), 0 0 60px rgba(255, 182, 193, 0.5); }
+    }
+
+    h1 {
+      animation: glow 3s infinite;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .buttons-row {
+        grid-template-columns: 1fr;
+      }
+
+      button {
+        padding: 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      .special-button button {
+        padding: 2rem;
+        font-size: 1rem;
+      }
+
+      #messaggio {
+        padding: 2rem;
+        font-size: 1.1rem;
+      }
+
+      #messaggio img {
+        width: 100% !important;
+        max-width: 100%;
+      }
+
+      .surprise-content {
+        padding: 2rem;
+      }
+
+      .surprise-content h2 {
+        font-size: 2rem;
+      }
+
+      .qr-container img {
+        width: 250px;
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  
+  <div class="container">
+    <h1>Apri Quando...</h1>
+
+    <div class="buttons-wrapper">
+      <div class="buttons-row">
+        <button onclick="apri('triste')">Sei triste</button>
+        <button onclick="apri('felice')">Sei felice</button>
+      </div>
+      
+      <div class="buttons-row">
+        <button onclick="apri('hai-dubbi')">Hai dei dubbi</button>
+        <button onclick="apri('primo-mese')">Primo mese</button>
+      </div>
+
+      <div class="buttons-row">
+        <button onclick="apri('ricordo')">Ricordo</button>
+      </div>
+    </div>
+
+    <div class="special-button">
+      <button onclick="apri('lista')">Lascia che le stelle ti insegnano che il buio e necessario per vedere la luce</button>
+    </div>
+
+    <!-- Sezione Sorpresa -->
+    <div class="surprise-section">
+      <div class="envelope" onclick="openEnvelope()">
+        <div class="envelope-flap"></div>
+        <div class="envelope-body">
+          <span class="envelope-text">C'è una sorpresa per te...</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="surprise-reveal" class="hidden">
+      <div class="surprise-content">
+        <h2>I Nostri Ricordi Speciali</h2>
+        <p class="surprise-message">Scannerizza il QR code per scoprire tutti i nostri momenti insieme</p>
+        <div class="qr-container">
+          <img src="M0DVuY.png" alt="QR Code Album Foto">
+        </div>
+        <p class="surprise-hint">Oppure <a href="https://photos.app.goo.gl/gNG4ms7Z77X8JUx96" target="_blank">clicca qui</a> per aprire l'album</p>
+      </div>
+    </div>
+    
+    <div id="messaggio" class="hidden"></div>
+  </div>
+
+  <script>
+    // Crea particelle luminose animate
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      const size = Math.random() * 60 + 20;
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+      particlesContainer.appendChild(particle);
+    }
+
+    function apri(tipo) {
+      const messaggi = {
+        "triste": `Allora amore, so che in questo momento sei triste, so che è un momento difficile ma io sono qua, qua per aiutarti, ascoltarti o semplicemente restare in silenzio finché non sarai pronta a parlarne. 
+
+Sono sicuro che, se me ne vuoi parlare, troveremo una soluzione insieme, in questo momento magari rappresenta tipo una montagna da scalare, possiamo superare questa montagna insieme…
+
+Se per caso qualcuno ti ha fatto qualcosa gli vado sotto casa io, se è successo qualcosa che non doveva succedere possiamo trovare un nuovo modo per farla andare bene oppure trovare qualcosa che ti faccia stare meglio, lo vuoi un abbraccio? ti do anche un bacino se vuoi… Sono qua per te e ci sarò sempre. 
+
+Se mari sono via o altro ricordati di quelle facce da coglione che facevo oppure di quei momenti dove non la smettevamo di ridere, ripensa a quando eravamo felici, sperando che questi ti strappi un sorriso o una risata, ti voglio un mondo di bene amoreee, sono qui per te quando ti senti pronta   
+`,
+
+        "felice": `Sono felicissimo per te amore, meriti tutta la felicità del mondo, sono la persona più felice al mondo quando ti vedo sorridere, non lasciarti mai abbattere dalle altre persone, so che sembra la tipica cosa che dici, "ma sì dai dice così perché è la tipica frase fatta" e invece no ahahahah, di solito diamo molto peso a cose che non hanno senso. 
+
+Detto ciò voglio che tu ti goda questo momento al massimo, non te ne devi perdere un secondo, sei ancora qua? 
+
+Vai a divertirti amore, poi raccontami tutto. 
+Hai un sorriso splendido… sono contentissimo che ti sei divertita o ti stai divertendo, non so in che momento leggerai questo messaggio ma sapere che lo aprirai nei momenti in cui sei felice o anche a caso, mi rende felice anche a me. 
+
+Perché si è vero, quando sei felice te sono felice anche io, quando io sono felice anche tu lo sei, e una cosa che viene trasmessa la felicità, soprattutto quando sarai triste (oltre a leggere il messaggio che c'è di là) sarò sempre qua a scherzare, ridere, fare il coglione per strapparti un sorriso o una risata, in quel momento la priorità sarà renderti felice.   
+`,
+
+        "hai-dubbi": `Allora, era da un po' che volevo scriverti questa cosa, perché, perché si, fatto sta che questo mi sembra il momento migliore, sono due mesi che stiamo insieme e sinceramente mi sto divertito un mondo, mi trovo benissimo con te, e ti giuro che io una persona migliore di te non la potevo trovare;
+Lo so lo ripeto molto spesso il punto e che è vero, sei unica, perché sei la prima che c'è veramente stata per me, quella che sta sveglia anche tutta la notte se sa che stai male, quella che ti fa ridere anche nei momenti no, quella persona super affettuosa, ma anche super attiva. 
+Tu rappresenti la perfezione c'è poco da dire.
+Ogni tanto, molto spesso, mi fermo e mi rendo conto di quanto sono fortunato ad averti nella mia vita, e a quanto questa cosa mi sta facendo bene, allora mi fermo guardando il vuoto pensando, con la faccia di uno che sta guardando la cosa più bella nella sua vita, penso a te e dico cazzo che fortuna.
+Adoro tutto di te, dai momenti tristi, a quelli felici, o quando non finiamo più di ridere, quando ci pestiamo, gli sguardi improvvisi che ogni tanto ci scambiamo prima di metterci a ridere, i discorsi profondi, la determinazione nel portare a termine un progetto, i momenti in cui ti preoccupi o sei interessata a qualcosa, i momenti dove eravamo io e te e il resto del mondo sembrava isolato.
+Ma anche di fisico come gli occhi, il tuo naso, le orecchie che con tutti gli orecchini stai da dio, le tue coscie, e si anche tette e culo non le togliamo dall'elenco; Il tuo fisico non ti piace lo so eppure io sono convinto del contrario, sono convinto per come sei sei perfetta, e io sarò qua a ricordartelo in ogni momento, quando ti sentirai insicura oppure timorosa, io sarò qua a dirti che sei perfetta.
+Si l'ho dico da tutto il messaggio (perfetta) però fammi aggiungere altro all'elenco...
+C'è anche la parte del carattere, divertente, affettuosa, gelosa, determinata, un po' testarda ma va passo passo con la determinazione(non è una cosa negativa amore), sai sempre dare consigli magnifici, sei disposta a tutto per tutti, in più sei provocatoria, sensibile, ma anche agguerrita, forte, spavalda, intelligente, innovativa, curiosa, con spirito critico eee molto altri che in questi momento non mi viene in mente.
+Di sicuro avrò saltato qualcosa maaa tutto questo era per dirti che mi colori le giornate, con te sto bene e ho grandi progetti per noi, mi aspettavo qualcosa di così lungo? Sì ahahahhs.
+A parte gli scherzi non so come dirti che sei perfetta, e che io con te sto benissimo, e questo mi sembrava un modo efficace  per dirtelo.
+Ti amo tantissimo amoreeee e ti voglio tanto bene 💋💋💋💋
+`,
+
+        "primo-mese": `
+Ti devo dire la verità, questo mese non l'ho sentito per niente mi sembra ieri che e partito tutto;
+E si, ammetto che la prima volta che ti ho visto non mi aspettavo tutto questo, più che altro perché sono una persona difficile da amare o in generale da capire, non sono una delle classiche persone che trovi ogni giorno, ma questa e anche uno dei miei pregi come credo che avrai notato.
+
+La prima volta che ti ho vista "mi hai sorpresa", ti ho sempre detto così quando mi chiedevi perché mi sono convinto di provarci con te… beh tutto quello che ti ho detto è vero, ma ci sono cose che non ho mai detto a nessuno tipo della notte insonne, subito dopo che Sam mi ha messo la verità in faccia, passata a guardare il soffitto e a capire se ne valeva la pena e devo dire che appena ho messo da parte le mie paranoie e mi sono convinto ho capito che dovevo metterci tutto il mio impegno;
+
+Durante questo mese ho capito varie cose, per prima cosa ho capito che una ragazza migliore di così non la trovo più, perché in questo mese mi hai illuminato le giornate, fin da subito mi hai dato consigli e mi sei stata vicino in molti momenti difficili, questo non è da tutti molti mi avrebbero mandato a fanculo molto tempo fa ma tu sei rimasta.
+
+Se mi chiedessero di te di sicuro andrei a dire che ti amo (ma tanto cazzo), che mi sono affezionato praticamente subito, che sei diventata una parte fondamentale della mia vita; eppure non riuscirei a spiegare le sensazioni che provo quando ti guardo negli occhi, è vero molte volte ti fisso e riconosco che sa un po da maniaco però dopo tutto resterei ore a guardarti, mi giustifico così; un'altra cosa che non riuscirei a spiegare e l'amore che provo quando ti soffermi sulle piccole cose tipo regalarmi la rosa piuttosto che la poesia, il peluches, il cuore (quello che hai fatto), ma anche le piccole occhiate che mi mandi ogni tanto, oppure preoccuparti se succede qualcosa o se torno a casa tardi in moto, ma anche semplicemente che sei interessata anche a una stronzata che ti sto dicendo… sono piccole cose ma sono quelle che fanno la differenza e la fanno soprattutto se le fai tu… 
+
+Questo solo per dirti che ti amo, e sono molto affezionato a te, anche se si è passato solo un mese, oltre a tutto questo non ho mai avuto una relazione come questa sono abituato a vederle finire male, ma mi fido di te e so che insieme possiamo passare sopra tutti e tutto, dato che siamo così competitivi; 
+Per finire vorrei dire che sei diventata una sorta di ossessione per me, sei sempre nei miei pensieri, di notte o di giorno, nei momenti belli o quelli più difficili… perciò si mi sa che ti tocca sopportarmi per un bel po… Ti amo tanto amore mio, più di quanto riesca a scrivere e più di quanto riesco a dirtelo.
+
+P.S. Sei una persona che pensa molto, a volte troppo, ti soffermi sulle minime cose, l'ho visto, ma sono qui anche per dirti che non devi lasciarti fermare da questa cosa sei la ragazza più forte che abbia mai visto so che puoi affrontare molte sfide e io sarò al tuo fianco e ti supporterò e se mi darai il permesso ti darò una mano e ne usciremo vittoriosi insieme.           
+`,
+
+        "lista": `1. <a href="https://vm.tiktok.com/ZNdkKnxoq/" target="_blank">Cliccami</a><br>
+2. <a href="https://vm.tiktok.com/ZNdkKQ34u/" target="_blank">Cliccami</a><br>
+3. <a href="https://vm.tiktok.com/ZNdkK5RqF/" target="_blank">Cliccami</a><br>
+4. <a href="https://vm.tiktok.com/ZNdkKP9jt/" target="_blank">Cliccami</a><br>
+5. <a href="https://vm.tiktok.com/ZNdkKP9jt/" target="_blank">Cliccami</a><br>
+6. <a href="https://vm.tiktok.com/ZNdkKqTvQ/" target="_blank">Cliccami</a><br>
+7. <a href="https://vm.tiktok.com/ZNdkKbsa8/" target="_blank">Cliccami</a><br>
+8. <a href="https://vm.tiktok.com/ZNdkKfow2/" target="_blank">Cliccami</a><br>
+9. <a href="https://vm.tiktok.com/ZNdkKXdpA/" target="_blank">Cliccami</a><br>`,
+
+        "ricordo": `Un ricordo a cui non smettero mai di pensare e la giornata del picnic che abbiamo fatto, alla fine era una giornata semplice con poche idee messe insieme, ma se ci pensi e stata una giornata fantastica dalla cenacon il sushi, al tramonto rosso fuoco visto da distante, a quando hai provato la moto per la prima volta, tutte cose piccole ma che hanno reso la giornata indimenticabile, non che tutte le altre giornate con te non lo siano perché sia chiaro, mi diverto un casino con te;
+Quella giornata mi e rimasta impressa, perché?, bhe perché ero libero, con 0 pensieri ed ero con te perciò non mi preoccupavo neanche di quello che succcedeva sapevo cche se capitava qualcosa di storto lo avremmo risolto insieme, è se ci pensi e anche questa la nostra forza, ovvero quella di supportarci lun l'altro, se tu hai un problema anche io ce l'ho finché non lo risolviamo, e so che dirai si e vero però alcune cose preferisco risolverle da sola, sono completamente daccordo, io non ho mai detto che posso risolvere tutti i problemi che verranno fuori ma sarò comunque li a supportarti e avrai sempre una persona su cui contare e quella persona sono IO
+<div>
+  <img src="bacio.jpg" width="400px">
+  <img src="tramonto.jpg" width="400px">
+  <img src="insieme.jpg" width="400px">
+</div>`
+      };
+
+      const box = document.getElementById("messaggio");
+      box.innerHTML = messaggi[tipo] || "Messaggio non trovato.";
+      box.classList.remove("hidden");
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Funzione per aprire la busta sorpresa
+    function openEnvelope() {
+      const envelope = document.querySelector('.envelope');
+      const surprise = document.getElementById('surprise-reveal');
+      
+      envelope.classList.add('opened');
+      
+      setTimeout(() => {
+        surprise.classList.remove('hidden');
+        surprise.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 600);
+    }
+  </script>
+</body>
+</html>
